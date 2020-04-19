@@ -1,9 +1,9 @@
 <script>
-    import Search from './Search.svelte';
-    import Home from './Home.svelte';
+    import Search from './components/Search.svelte';
+    import Home from './components/Home.svelte';
+    import { fetchSummary } from './api/summary';
 
-    let promise = getSummary();
-    const locale = navigator.languages ? navigator.languages[0] : navigator.language;
+    let promise = fetchSummary();
 
     let showSearch = false;
     let countrySelected = localStorage.getItem('country');
@@ -16,17 +16,6 @@
         countrySelected = country;
         localStorage.setItem('country', country);
     }
-
-	async function getSummary() {
-        const res = await fetch(`https://api.covid19api.com/summary`);
-		const data = await res.json();
-
-		if (res.ok) {
-			return data;
-		} else {
-			throw new Error(data);
-		}
-	}
 </script>
 
 <main>
